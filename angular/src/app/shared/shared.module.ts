@@ -7,6 +7,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { LottieModule } from 'ngx-lottie';
+import { HttpClientModule } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RestControllerService } from './services/main/rest-controller.service';
 
 export function playerFactory() {
   return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
@@ -23,6 +26,17 @@ export function playerFactory() {
     FormlyModule.forRoot({ extras: { lazyRender: true } }),
     FormlyBootstrapModule,
     LottieModule.forRoot({ player: playerFactory }), //PARA LAS ANIMACIONES DE LOTTIE FILES
-  ]
+    HttpClientModule,
+    FontAwesomeModule
+  ],
+  exports: [
+    NgbModule,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    FormsModule,
+    FormlyModule,
+    FormlyBootstrapModule
+  ],
+  providers: [RestControllerService]
 })
 export class SharedModule { }

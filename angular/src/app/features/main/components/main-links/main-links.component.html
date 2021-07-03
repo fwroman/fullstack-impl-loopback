@@ -1,0 +1,18 @@
+<div class="d-flex flex-row justify-content-between">
+    <ng-container *ngIf="!atHome">
+        <a [routerLink]="'/home'" [routerLinkActive]="'fr-link-active'" class="fr-link">
+            Inicio
+            <span></span>
+        </a>
+        <div class="fr-divider"><span></span></div>
+    </ng-container>
+    <a [routerLink]="'/admin'" [routerLinkActive]="'fr-link-active'" class="fr-link">
+        Administración de Datos
+        <span></span>
+    </a>
+    <div class="fr-divider"><span></span></div>
+    <a [routerLink]="'/git-profiles'" [routerLinkActive]="'fr-link-active'" class="fr-link">
+        Visualización de Perfiles
+        <span></span>
+    </a>
+</div>

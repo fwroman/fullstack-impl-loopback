@@ -1,0 +1,180 @@
+@import '~src/theme/variables';
+@import '~src/theme/media_query';
+@import '~src/theme/spinner';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+html {
+  height: -webkit-fill-available;
+}
+
+body {
+  display       : flex;
+  flex-direction: column;
+  min-height    : 100vh;
+  color         : $body-color;
+  background    : $body-bg !important;
+  font-family   : 'Courier New', Courier, monospace !important;
+  font-size     : .77rem !important;
+  overflow-x    : hidden;
+  padding       : 0px;
+  margin        : 0px;
+
+  @include MQ(TS) {
+    font-size: .79rem !important;
+  }
+
+  @include MQ(XS) {
+    font-size: .81rem !important;
+  }
+
+  @include MQ(S) {
+    font-size: .83rem !important;
+  }
+
+  @include MQ(MS) {
+    font-size: .85rem !important;
+  }
+
+  @include MQ(M) {
+    font-size: .87rem !important;
+  }
+
+  @include MQ(L) {
+    font-size: .89rem !important;
+  }
+
+  @include MQ(XL) {
+    font-size: .91rem !important;
+  }
+
+  main {
+    flex          : 1;
+    display       : flex !important;
+    flex-direction: column;
+    background    : $body-bg !important;
+    overflow      : unset;
+  }
+
+  app-root {
+    flex          : 1;
+    display       : flex;
+    flex-direction: column;
+    overflow      : unset;
+
+    >:not(router-outlet) {
+      flex          : 1;
+      display       : flex;
+      flex-direction: column;
+      overflow      : unset;
+    }
+  }
+}
+
+.fr-flex-child {
+  flex: 1 !important;
+}
+
+.fr-flex-no-grow {
+  flex-grow: 0 !important;
+}
+
+.fr-position-relative {
+  position: relative !important;
+  ;
+}
+
+.fr-link {
+  text-decoration: none !important;
+  position       : relative;
+
+  span {
+    position  : absolute;
+    height    : 2px;
+    width     : 100%;
+    left      : 0px;
+    bottom    : 0px;
+    background: $spinner-gray-color;
+    transition: all .3s ease;
+    transform : scaleX(0);
+  }
+
+  &.fr-link-active {
+    span {
+      transform : scaleX(100%);
+      background: $primary-dark;
+    }
+  }
+}
+
+.fr-link:hover {
+  span {
+    transition: all .4s ease;
+    transform : scaleX(100%);
+  }
+}
+
+.fr-divider {
+  padding-left   : 1rem;
+  padding-right  : 1rem;
+  display        : flex;
+  justify-content: center;
+  align-items    : stretch;
+
+  span {
+    width     : 2px;
+    background: $spinner-gray-color;
+  }
+}
+
+.fr-detail-list {
+  border-top   : none !important;
+  border-left  : none !important;
+  width        : 25%;
+  border-radius: 0px !important;
+
+  &.fr-detail-right {
+    width       : 75%;
+    border-right: none !important;
+  }
+
+  &.fr-detail-last {
+    border-bottom: none !important;
+  }
+}
+
+.fr-animation-container {
+  display       : flex;
+  flex-direction: row;
+  align-items   : stretch;
+  position      : relative;
+  overflow      : hidden;
+
+  .fr-animation-item {
+    position  : absolute;
+    left      : 0px;
+    top       : 0px;
+    width     : 100%;
+    transition: all 0.3s ease;
+
+    &.fr-animation-left {
+      transform : translateX(-100%);
+      visibility: hidden !important;
+    }
+
+    &.fr-animation-right {
+      transform : translateX(100%);
+      visibility: hidden !important;
+    }
+
+    &.fr-animation-active {
+      transition: all 0.4s ease;
+      transform : translateX(0);
+    }
+
+    &.fr-no-animation {
+      transition: none !important;
+    }
+  }
+}

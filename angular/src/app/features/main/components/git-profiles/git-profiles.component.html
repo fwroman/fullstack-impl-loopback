@@ -1,0 +1,44 @@
+<div class="fr-flex-child container h-100 d-flex flex-column align-items-center pt-4">
+    <main-links></main-links>
+    <div class="d-flex flex-column w-100 pt-4">
+        <h2>Visualización de Perfiles de GitHub</h2>
+        <hr class="mt-0" width="100%">
+    </div>
+
+    <div class="fr-flex-child d-flex mt-3 w-100">
+        <div class="col-md-5 col-lg-4">
+            <canvas #profileAnimation></canvas>
+        </div>
+
+        <div class="col-md-7 col-lg-8">
+            <div class="w-100 d-flex flex-column align-items-center">
+                <div class="card w-100">
+                    <div class="card-header d-flex justify-content-between">
+                        <strong class="d-flex align-items-center">Detalle del Usuario Git</strong>
+                        <button class="btn btn-sm btn-info">Agregar</button>
+                    </div>
+                    <div>
+                        <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                            <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                <strong>Usuario:</strong>
+                            </li>
+                            <li class="fr-detail-list fr-detail-right list-group-item">fwroman</li>
+                        </ul>
+                        <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                            <li class="fr-detail-list list-group-item d-flex justify-content-end"><strong>Id.
+                                    nodo:</strong></li>
+                            <li class="fr-detail-list fr-detail-right list-group-item">MDQ6VXNlcjgyNjI2MDU=</li>
+                        </ul>
+                        <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                            <li class="fr-detail-list list-group-item fr-detail-last d-flex justify-content-end">
+                                <strong>Url:</strong>
+                            </li>
+                            <li class="fr-detail-list fr-detail-right fr-detail-last list-group-item">
+                                https://api.github.com/users/fwroman</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
