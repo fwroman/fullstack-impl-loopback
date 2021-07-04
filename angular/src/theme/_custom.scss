@@ -131,11 +131,11 @@ body {
 .fr-detail-list {
   border-top   : none !important;
   border-left  : none !important;
-  width        : 25%;
+  width        : 30%;
   border-radius: 0px !important;
 
   &.fr-detail-right {
-    width       : 75%;
+    width       : 70%;
     border-right: none !important;
   }
 
@@ -177,4 +177,8 @@ body {
       transition: none !important;
     }
   }
+}
+
+.fr-visibility-hidden {
+  visibility: hidden;
 }

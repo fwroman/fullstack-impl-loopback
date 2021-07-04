@@ -5,40 +5,183 @@
         <hr class="mt-0" width="100%">
     </div>
 
-    <div class="fr-flex-child d-flex mt-3 w-100">
-        <div class="col-md-5 col-lg-4">
-            <canvas #profileAnimation></canvas>
+    <div class="fr-flex-child d-flex flex-column mt-1 w-100">
+        <div *ngIf="filteredUserList.length > 0" class="d-flex justify-content-between align-items-center mb-4">
+            <button class="btn btn-sm btn-outline-info" [disabled]="page == 0" (click)="filterUsersList(false)"
+                [ngClass]="{  'fr-visibility-hidden': filterPattern.length > 0 }">
+                <fa-icon [icon]="iconLeft"></fa-icon>
+            </button>
+
+            <div class="form-group d-flex align-items-center mb-0">
+                <label class="form-label mb-0">Buscar:</label>
+                <input type="text" class="form-control ml-2" name="findByUser" #findByUser="ngModel"
+                    [(ngModel)]="filterPattern" [ngModelOptions]="{ 'standalone': true }">
+                <button *ngIf="!searching else cancelBtn" class="btn btn-sm btn-secondary ml-2"
+                    (click)="searchByUsername()" [disabled]="filterPattern.length == 0">
+                    <fa-icon [icon]="iconSearch"></fa-icon>
+                </button>
+                <ng-template #cancelBtn>
+                    <button class="btn btn-sm btn-secondary ml-2" (click)="cancelSearching()">
+                        <fa-icon [icon]="iconCancel"></fa-icon>
+                    </button>
+                </ng-template>
+            </div>
+
+            <button class="btn btn-sm btn-outline-info" [disabled]="page == fullUserList.length - 1"
+                (click)="filterUsersList(true)" [ngClass]="{  'fr-visibility-hidden': filterPattern.length > 0 }">
+                <fa-icon [icon]="iconRight"></fa-icon>
+            </button>
         </div>
 
-        <div class="col-md-7 col-lg-8">
-            <div class="w-100 d-flex flex-column align-items-center">
-                <div class="card w-100">
-                    <div class="card-header d-flex justify-content-between">
-                        <strong class="d-flex align-items-center">Detalle del Usuario Git</strong>
-                        <button class="btn btn-sm btn-info">Agregar</button>
-                    </div>
-                    <div>
-                        <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                            <li class="fr-detail-list list-group-item d-flex justify-content-end">
-                                <strong>Usuario:</strong>
-                            </li>
-                            <li class="fr-detail-list fr-detail-right list-group-item">fwroman</li>
-                        </ul>
-                        <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                            <li class="fr-detail-list list-group-item d-flex justify-content-end"><strong>Id.
-                                    nodo:</strong></li>
-                            <li class="fr-detail-list fr-detail-right list-group-item">MDQ6VXNlcjgyNjI2MDU=</li>
-                        </ul>
-                        <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                            <li class="fr-detail-list list-group-item fr-detail-last d-flex justify-content-end">
-                                <strong>Url:</strong>
-                            </li>
-                            <li class="fr-detail-list fr-detail-right fr-detail-last list-group-item">
-                                https://api.github.com/users/fwroman</li>
-                        </ul>
+        <div *ngFor="let gitUser of filteredUserList" class="mb-4 d-flex">
+            <div class="col-md-4 col-lg-3 px-0">
+                <canvas id="{{ canvasIdPrefix + gitUser.id }}"></canvas>
+            </div>
+
+            <div class="col-md-8 col-lg-9 px-0">
+                <div class="w-100 d-flex flex-column align-items-center">
+                    <div class="card w-100">
+                        <div class="card-header d-flex justify-content-between">
+                            <strong class="d-flex align-items-center">Detalle del Usuario Git</strong>
+                            <button class="btn btn-sm btn-info">Agregar</button>
+                        </div>
+
+                        <div>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Usuario:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">{{ gitUser.login }}</li>
+                            </ul>
+
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Id. nodo:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.nodeId }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Url:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.url }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Url html:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.htmlUrl }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Url seguidores:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.followersUrl }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Url seguidos:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.followingUrl }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Url gists:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.gistsUrl }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Url starred:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.starredUrl }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Url subscripción:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.subscriptionsUrl }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Url organizaciones:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.organizationsUrl }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Url repositorios:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.reposUrl }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Url eventos:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.eventsUrl }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Url eventos recibidos:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.receivedEventsUrl }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                                    <strong>Tipo:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right list-group-item">
+                                    {{ gitUser.type }}
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                                <li class="fr-detail-list list-group-item fr-detail-last d-flex justify-content-end">
+                                    <strong>Es admin:</strong>
+                                </li>
+                                <li class="fr-detail-list fr-detail-right fr-detail-last list-group-item">
+                                    {{ gitUser.siteAdmin ? 'SI' : 'NO' }}
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div *ngIf="filteredUserList.length > 0" class="d-flex justify-content-between mb-4">
+            <button class="btn btn-sm btn-outline-info" [disabled]="page == 0" (click)="filterUsersList(false)"
+                [ngClass]="{  'fr-visibility-hidden': filterPattern.length > 0 }">
+                <fa-icon [icon]="iconLeft"></fa-icon>
+            </button>
+
+            <button class="btn btn-sm btn-outline-info" [disabled]="page == fullUserList.length - 1"
+                (click)="filterUsersList(true)" [ngClass]="{  'fr-visibility-hidden': filterPattern.length > 0 }">
+                <fa-icon [icon]="iconRight"></fa-icon>
+            </button>
         </div>
     </div>
 </div>

@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GitUser } from 'src/app/shared/interfaces/git-user';
 import * as THREE from 'three';
 import { GithubControllerService } from '../../services/github-controller.service';
+import { faChevronLeft, faChevronRight, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 function main(canvas: any, imgUrl: string) {
   const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
@@ -66,35 +67,109 @@ function main(canvas: any, imgUrl: string) {
   requestAnimationFrame(render);
 }
 
+const CANVAS_ID_PREFIX = 'gituser-';
+
 @Component({
   selector: 'app-git-profiles',
   templateUrl: './git-profiles.component.html',
   styleUrls: ['./git-profiles.component.scss']
 })
-export class GitProfilesComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild("profileAnimation") profileAnimationRef: ElementRef | any;
-  private profileAnimation: HTMLElement | any;
-
+export class GitProfilesComponent implements OnInit, OnDestroy {
   private loadUsersSubs: Subscription | any;
+
+  public fullUserList: GitUser[];
+  public filteredUserList: GitUser[];
+  public canvasIdPrefix: string;
+
+  public iconLeft: any;
+  public iconRight: any;
+  public iconSearch: any;
+  public iconCancel: any;
+
+  public page: number;
+  public pageLimit: number;
+  public filterPattern: string;
+  public searching: boolean;
 
   constructor(
     private _GithubControllerService: GithubControllerService
-  ) { }
+  ) {
+    this.fullUserList = [];
+    this.filteredUserList = [];
+    this.canvasIdPrefix = CANVAS_ID_PREFIX;
+
+    this.iconLeft = faChevronLeft;
+    this.iconRight = faChevronRight;
+    this.iconSearch = faSearch;
+    this.iconCancel = faTimes;
+    this.page = 0;
+    this.pageLimit = 5;
+    this.filterPattern = "";
+    this.searching = false;
+  }
 
   ngOnInit(): void {
     this.loadGitUsers();
   }
 
-  ngAfterViewInit() {
-    this.profileAnimation = this.profileAnimationRef.nativeElement;
-    const img = 'https://threejsfundamentals.org/threejs/resources/images/wall.jpg';
-
-    main(this.profileAnimation, img);
+  /**
+   * METHOD TO CANCEL THE USER SEARCHING
+   */
+  public cancelSearching() {
+    this.filterPattern = "";
+    this.searching = false;
+    this.filteredUserList = JSON.parse(JSON.stringify(this.fullUserList)).slice(this.page, this.pageLimit);
+    setTimeout(() => {
+      this.initializeCanvasList();
+    }, 500);
   }
 
+  /**
+   * METHOD TO SEARCH A GIT USER BY HIS/HER USERNAME FROM THE GIT HUB CONTROLLER SERVICE
+   */
+  public searchByUsername() {
+    this.searching = true;
+    this._GithubControllerService.getUsersByUseraname(this.filterPattern).subscribe((userData: GitUser) => {
+      this.filteredUserList = [userData];
+      setTimeout(() => {
+        this.initializeCanvasList();
+      }, 500);
+    });
+  }
+
+  /**
+   * METHOD TO FILTER AND PREPARE THE GIT HUB USER LIST TO BE SHOWN IN THE VIEW IN AN SPECIFIC PAGE
+   */
+  public filterUsersList(goForward: boolean) {
+    this.page = goForward ? this.page + 1 : this.page - 1;
+    const filterFrom = this.page * this.pageLimit;
+    const filterTo = filterFrom + this.pageLimit;
+    this.filteredUserList = JSON.parse(JSON.stringify(this.fullUserList)).slice(filterFrom, filterTo);
+    setTimeout(() => {
+      this.initializeCanvasList();
+    }, 500);
+  }
+
+  /**
+   * METHOD TO PREPARE THE CANVAS TO SHOW THE PROFILES PICTURES
+   */
+  private initializeCanvasList() {
+    this.filteredUserList.map((record, index) => {
+      const canvas = document.getElementById(this.canvasIdPrefix + record.id);
+      main(canvas, record.avatarUrl);
+    });
+  }
+
+  /**
+   * METHOD TO LOAD ALL GITHUB USERS FROM THE GIT HUB CONTROLLER SERVICE
+   */
   private loadGitUsers() {
     this.loadUsersSubs = this._GithubControllerService.getAllUsers().subscribe((gitUserList: GitUser[]) => {
-      console.log("gitUserList", gitUserList);
+      this.fullUserList = gitUserList;
+      this.filteredUserList = JSON.parse(JSON.stringify(this.fullUserList)).slice(this.page, this.pageLimit);
+      setTimeout(() => {
+        this.initializeCanvasList();
+      }, 500);
     });
   }
 
