@@ -1,9 +1,15 @@
-import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
-import {juggler} from '@loopback/repository';
+import { inject, lifeCycleObserver, LifeCycleObserver } from '@loopback/core';
+import { juggler } from '@loopback/repository';
 
 const config = {
-  name: 'db_with_loopback4',
-  connector: 'kv-memory'
+  name: 'data_fred',
+  connector: 'mongodb',
+  url: '',
+  host: 'localhost',
+  port: 27017,
+  user: '',
+  password: '',
+  database: 'db_with_loopback4'
 };
 
 // Observe application's life cycle to disconnect the datasource when
@@ -13,11 +19,11 @@ const config = {
 @lifeCycleObserver('datasource')
 export class DbWithLoopback4DataSource extends juggler.DataSource
   implements LifeCycleObserver {
-  static dataSourceName = 'db_with_loopback4';
+  static dataSourceName = 'data_fred';
   static readonly defaultConfig = config;
 
   constructor(
-    @inject('datasources.config.db_with_loopback4', {optional: true})
+    @inject('datasources.config.data_fred', { optional: true })
     dsConfig: object = config,
   ) {
     super(dsConfig);

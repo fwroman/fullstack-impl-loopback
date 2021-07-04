@@ -1,1 +1,1 @@
-export * from './db-with-loopback4.datasource';
+export * from './db.datasource';
