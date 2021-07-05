@@ -1,13 +1,14 @@
 import { Count, CountSchema, Filter, FilterExcludingWhere, repository, Where, } from '@loopback/repository';
-import { post, param, get, getModelSchemaRef, patch, put, del, requestBody, response, } from '@loopback/rest';
+import { post, param, get, getModelSchemaRef, patch, put, del, requestBody, response, RestBindings, Response, } from '@loopback/rest';
 import { User } from '../models/user.model';
 import { UserRepository } from '../repositories/user.repository';
 import moment from 'moment';
+import { inject } from '@loopback/core';
 
 export class UserController {
   constructor(
-    @repository(UserRepository)
-    public userRepository: UserRepository,
+    @repository(UserRepository) public userRepository: UserRepository,
+    @inject(RestBindings.Http.RESPONSE) protected response: Response,
   ) { }
 
   @post('/users')
@@ -27,8 +28,15 @@ export class UserController {
       },
     })
     user: Omit<User, 'id'>,
-  ): Promise<User> {
-    return this.userRepository.create(user);
+  ): Promise<User | unknown> {
+    const searchedUser = await this.userRepository.findOne({ where: { username: user.username } });
+    if (!searchedUser) {
+      return this.userRepository.create(user);
+    }
+    this.response.status(400).json({
+      message: "El usuario ya ha sido agregado anteriormente",
+      name: "USER_ALREADY_EXISTS"
+    });
   }
 
   @get('/users/count')

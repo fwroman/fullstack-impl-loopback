@@ -1,3 +1,5 @@
+<app-toast aria-live="polite" aria-atomic="true"></app-toast>
+
 <div class="fr-flex-child container h-100 d-flex flex-column align-items-center pt-4">
     <main-links></main-links>
     <div class="d-flex flex-column w-100 pt-4">
@@ -43,7 +45,7 @@
                     <div class="card w-100">
                         <div class="card-header d-flex justify-content-between">
                             <strong class="d-flex align-items-center">Detalle del Usuario Git</strong>
-                            <button class="btn btn-sm btn-info">Agregar</button>
+                            <button class="btn btn-sm btn-info" (click)="createNewRecord(gitUser)">Agregar</button>
                         </div>
 
                         <div>

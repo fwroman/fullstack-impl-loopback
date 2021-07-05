@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@
 import { Subscription } from 'rxjs';
 import { Loopabck4ControllerService } from 'src/app/features/main/services/loopabck4-controller.service';
 import { User } from 'src/app/shared/models/user';
+import { AnimatedImgService } from 'src/app/shared/services/animated-img.service';
 
 @Component({
   selector: 'user-detail',
@@ -16,7 +17,8 @@ export class UserDetailComponent implements OnInit, OnChanges, OnDestroy {
   public selectedUser: User;
 
   constructor(
-    private _Loopabck4ControllerService: Loopabck4ControllerService
+    private _Loopabck4ControllerService: Loopabck4ControllerService,
+    private _AnimatedImgService: AnimatedImgService
   ) {
     this.selectedUserId = "";
     this.selectedUser = new User();
@@ -26,11 +28,20 @@ export class UserDetailComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   /**
+   * METHOD TO PREPARE THE CANVAS TO SHOW THE PROFILE PICTURE
+   */
+  private initializeCanvasList() {
+    const canvas = document.getElementById("profileImg");
+    this._AnimatedImgService.renderAnimatedImg(canvas, this.selectedUser.avatarUrl);
+  }
+
+  /**
    * METHOD TO RETREIVE THE USER DATA BY HIS/HER ID FROM THE REST CLIENT CONTROLLER
    */
   private getUserById() {
     this._subscription = this._Loopabck4ControllerService.retrieveUserById(this.selectedUserId).subscribe((user: User) => {
       this.selectedUser = user;
+      this.initializeCanvasList();
     });
   }
 

@@ -1,71 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GitUser } from 'src/app/shared/interfaces/git-user';
-import * as THREE from 'three';
 import { GithubControllerService } from '../../services/github-controller.service';
 import { faChevronLeft, faChevronRight, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
-
-function main(canvas: any, imgUrl: string) {
-  const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
-
-  const fov = 50;
-  const aspect = 2;  // the canvas default
-  const near = 0.1;
-  const far = 5;
-  const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.z = 2;
-
-  const scene = new THREE.Scene();
-
-  const boxWidth = 1;
-  const boxHeight = 1;
-  const boxDepth = 1;
-  const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
-
-  const cubes: any[] = [];  // just an array we can use to rotate the cubes
-  const loader = new THREE.TextureLoader();
-
-  const material = new THREE.MeshBasicMaterial({
-    map: loader.load(imgUrl),
-  });
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
-  cubes.push(cube);  // add to our list of cubes to rotate
-
-  function resizeRendererToDisplaySize(renderer: any) {
-    const canvas = renderer.domElement;
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-    const needResize = canvas.width !== width || canvas.height !== height;
-    if (needResize) {
-      renderer.setSize(width, height, false);
-    }
-    return needResize;
-  }
-
-  function render(time: any) {
-    time *= 0.003;
-
-    if (resizeRendererToDisplaySize(renderer)) {
-      const canvas = renderer.domElement;
-      camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      camera.updateProjectionMatrix();
-    }
-
-    cubes.forEach((cube, ndx) => {
-      const speed = .2 + ndx * .1;
-      const rot = time * speed;
-      cube.rotation.x = rot;
-      cube.rotation.y = rot;
-    });
-
-    renderer.render(scene, camera);
-
-    requestAnimationFrame(render);
-  }
-
-  requestAnimationFrame(render);
-}
+import { Loopabck4ControllerService } from '../../services/loopabck4-controller.service';
+import { User } from 'src/app/shared/models/user';
+import { Router } from '@angular/router';
+import { ToastService } from 'src/app/shared/services/toast.service';
+import { AnimatedImgService } from 'src/app/shared/services/animated-img.service';
 
 const CANVAS_ID_PREFIX = 'gituser-';
 
@@ -92,7 +34,11 @@ export class GitProfilesComponent implements OnInit, OnDestroy {
   public searching: boolean;
 
   constructor(
-    private _GithubControllerService: GithubControllerService
+    private _GithubControllerService: GithubControllerService,
+    private _Loopabck4ControllerService: Loopabck4ControllerService,
+    private _Router: Router,
+    private _ToastService: ToastService,
+    private _AnimatedImgService: AnimatedImgService
   ) {
     this.fullUserList = [];
     this.filteredUserList = [];
@@ -110,6 +56,23 @@ export class GitProfilesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadGitUsers();
+  }
+
+  /**
+   * METHOD TO ADD A NEW USER FROM THE GITHUB API TO THE LOCAL DATABASE
+   */
+  public createNewRecord(gitUser: GitUser) {
+    const user = new User(null, gitUser.login, gitUser.id, gitUser.nodeId, gitUser.avatarUrl, gitUser.gravatarId, gitUser.url, gitUser.htmlUrl,
+      gitUser.followersUrl, gitUser.followingUrl, gitUser.gistsUrl, gitUser.starredUrl, gitUser.subscriptionsUrl, gitUser.organizationsUrl,
+      gitUser.reposUrl, gitUser.eventsUrl, gitUser.receivedEventsUrl, gitUser.type, gitUser.siteAdmin);
+    delete user.id;
+    this._Loopabck4ControllerService.createUser(user).subscribe(
+      (respData: User) => {
+        this._Router.navigate(['/admin']);
+      },
+      (err) => {
+        this._ToastService.show(err.error.message, { classname: 'bg-info text-light', delay: 5000 });
+      });
   }
 
   /**
@@ -156,7 +119,7 @@ export class GitProfilesComponent implements OnInit, OnDestroy {
   private initializeCanvasList() {
     this.filteredUserList.map((record, index) => {
       const canvas = document.getElementById(this.canvasIdPrefix + record.id);
-      main(canvas, record.avatarUrl);
+      this._AnimatedImgService.renderAnimatedImg(canvas, record.avatarUrl);
     });
   }
 

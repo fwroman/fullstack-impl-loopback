@@ -1,0 +1,3 @@
+<ngb-toast *ngFor="let toast of _ToastService.toasts" [header]="toast.header" [autohide]="true"
+    [class]="toast.classname" [delay]="toast.delay || 5000" (hide)="_ToastService.remove(toast)">{{toast.textOrTpl}}
+</ngb-toast>

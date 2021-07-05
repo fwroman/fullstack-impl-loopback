@@ -10,13 +10,16 @@ import { LottieModule } from 'ngx-lottie';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RestControllerService } from './services/main/rest-controller.service';
+import { ToastComponent } from './components/toast/toast.component';
+import { ToastService } from './services/toast.service';
+import { AnimatedImgService } from './services/animated-img.service';
 
 export function playerFactory() {
   return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
 }
 
 @NgModule({
-  declarations: [],
+  declarations: [ToastComponent],
   imports: [
     CommonModule,
     SharedRoutingModule,
@@ -35,8 +38,9 @@ export function playerFactory() {
     ReactiveFormsModule,
     FormsModule,
     FormlyModule,
-    FormlyBootstrapModule
+    FormlyBootstrapModule,
+    ToastComponent
   ],
-  providers: [RestControllerService]
+  providers: [RestControllerService, ToastService, AnimatedImgService]
 })
 export class SharedModule { }

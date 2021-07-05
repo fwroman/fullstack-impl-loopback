@@ -1,6 +1,6 @@
 export class User {
     constructor(
-        public id?: string,
+        public id?: string | any,
         public username?: string,
         public gitId?: number,
         public nodeId?: string,
