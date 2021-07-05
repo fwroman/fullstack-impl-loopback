@@ -1,1 +1,5 @@
-<p>user-edit works!</p>
+<form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="col-md-9 col-lg-8 d-flex flex-column align-items-center">
+    <formly-form [form]="updateForm" [fields]="formFields" [model]="selectedUser" class="w-100">
+    </formly-form>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

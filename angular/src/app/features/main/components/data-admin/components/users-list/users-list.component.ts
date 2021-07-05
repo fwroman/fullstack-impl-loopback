@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, EventEmitter, SimpleChanges, OnChanges, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { Loopabck4ControllerService } from 'src/app/features/main/services/loopabck4-controller.service';
@@ -9,7 +9,8 @@ import { User } from 'src/app/shared/models/user';
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.scss']
 })
-export class UsersListComponent implements OnInit, OnDestroy {
+export class UsersListComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() reloadList: boolean;
   @Output() onRowSelected: EventEmitter<User>;
   private subscription: Subscription | any;
 
@@ -21,6 +22,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   constructor(
     private _Loopabck4ControllerService: Loopabck4ControllerService
   ) {
+    this.reloadList = false;
     this.page = 1;
     this.pageSize = 5;
     this.onRowSelected = new EventEmitter<User>();
@@ -58,6 +60,18 @@ export class UsersListComponent implements OnInit, OnDestroy {
         this.userList = userList;
         this.collectionSize
       });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    for (let property in changes) {
+      if (property == "reloadList") {
+        if (changes[property].currentValue == true) {
+          setTimeout(() => {
+            this.getUsersList();
+          }, 500);
+        }
+      }
+    }
   }
 
   ngOnDestroy() {

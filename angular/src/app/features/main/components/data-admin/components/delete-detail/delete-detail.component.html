@@ -1,0 +1,29 @@
+<div class="col-md-10 col-lg-9 d-flex flex-column align-items-center">
+    <div class="card w-100">
+        <strong class="card-header">Eliminar Usuario</strong>
+        <div>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Usuario:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">{{ selectedUser.username }}</li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Id. nodo:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">{{ selectedUser.nodeId }}</li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item fr-detail-last d-flex justify-content-end">
+                    <strong>Url:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right fr-detail-last list-group-item">
+                    {{ selectedUser.url }}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <button class="btn btn-danger mt-3" (click)="getUserById()">Eliminar</button>
+</div>

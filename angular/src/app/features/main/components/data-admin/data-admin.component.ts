@@ -1,9 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { faPlus, faPencilAlt, faEye, faListAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { FormGroup } from '@angular/forms';
 import { User } from 'src/app/shared/models/user';
-import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Router } from '@angular/router';
 
 const CSS_ANIMATION_RIGHT = "fr-animation-right";
@@ -47,11 +45,8 @@ export class DataAdminComponent implements OnInit, AfterViewInit {
   public actionUpdate: string;
   public actionDelete: string;
   public currentAction: string;
-
-  public updateForm: FormGroup;
-  public user: User;
-  public formFields: FormlyFieldConfig[];
-  public SelectedUser: User;
+  public selectedUser: User;
+  public reloadList: boolean | any;
 
   constructor(
     private _Router: Router
@@ -68,153 +63,8 @@ export class DataAdminComponent implements OnInit, AfterViewInit {
     this.actionUpdate = ACTION_UPDATE;
     this.actionDelete = ACTION_DELETE;
     this.currentAction = this.actionList;
-
-    this.updateForm = new FormGroup({});
-    this.SelectedUser = new User();
-    this.user = new User();
-
-    this.formFields = [
-      {
-        key: 'username',
-        type: 'input',
-        templateOptions: {
-          label: 'Nombre de usuario',
-          required: true
-        }
-      },
-      {
-        key: 'nodeId',
-        type: 'input',
-        templateOptions: {
-          label: 'Id. Nodo',
-          required: true
-        }
-      },
-      {
-        key: 'avatarUrl',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Url de avatar',
-          rows: 2,
-          required: true
-        }
-      },
-      {
-        key: 'gravatarId',
-        type: 'input',
-        templateOptions: {
-          label: 'Url de gavatar',
-          required: false
-        }
-      },
-      {
-        key: 'url',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Url',
-          rows: 2,
-          required: true
-        }
-      },
-      {
-        key: 'htmlUrl',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Url Html',
-          rows: 2,
-          required: true
-        }
-      },
-      {
-        key: 'followersUrl',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Url Seguidores',
-          rows: 2,
-          required: true
-        }
-      },
-      {
-        key: 'followingUrl',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Url seguidos',
-          rows: 2,
-          required: true
-        }
-      },
-      {
-        key: 'gistsUrl',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Url gits',
-          rows: 2,
-          required: true
-        }
-      },
-      {
-        key: 'starredUrl',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Url starred',
-          rows: 2,
-          required: true
-        }
-      },
-      {
-        key: 'subscriptionsUrl',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Url suscripción',
-          rows: 2,
-          required: true
-        }
-      },
-      {
-        key: 'organizationsUrl',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Url de organizaciones',
-          rows: 2,
-          required: true
-        }
-      },
-      {
-        key: 'reposUrl',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Url de repositorios',
-          rows: 2,
-          required: true
-        }
-      },
-      {
-        key: 'eventsUrl',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Url de eventos',
-          rows: 2,
-          required: true
-        }
-      },
-      {
-        key: 'receivedEventsUrl',
-        type: 'textarea',
-        templateOptions: {
-          label: 'Url de eventos recibidos',
-          rows: 2,
-          required: true
-        }
-      },
-      {
-        key: 'type',
-        type: 'input',
-        templateOptions: {
-          label: 'Tipo',
-          required: true
-        }
-      }
-    ];
+    this.selectedUser = new User();
+    this.reloadList = false;
   }
 
   ngOnInit(): void { }
@@ -228,15 +78,23 @@ export class DataAdminComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * METHOD
+   * @param event 
+   */
+  public goToMainList(event: boolean) {
+    this.taskButtonClick(ACTION_LIST);
+    this.reloadList = null;
+    setTimeout(() => {
+      this.reloadList = true;
+    });
+  }
+
+  /**
    * METHOD TO CATCH THE SELECTED USER THROUGH A EVENT EMITTER FROM THE CHILD COMPONENT
    * @param $event 
    */
   public catchSelectedRow(event: User) {
-    this.SelectedUser = event;
-  }
-
-  public onSubmit() {
-    console.log(this.user);
+    this.selectedUser = event;
   }
 
   /**
@@ -260,6 +118,7 @@ export class DataAdminComponent implements OnInit, AfterViewInit {
     switch (actionType) {
       case ACTION_LIST:
         this.currentAction = this.actionList;
+        this.selectedUser = new User();
         if (this.listContainer instanceof HTMLElement) {
           this.listContainer.classList.remove(CSS_ANIMATION_RIGHT);
           this.listContainer.classList.add(CSS_ANIMATION_ACTIVE);

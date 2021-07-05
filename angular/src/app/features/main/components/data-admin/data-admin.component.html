@@ -18,17 +18,17 @@
                         <fa-icon [icon]="iconList"></fa-icon>
                     </button>
                     <button *ngIf="currentAction != actionRetrieve" type="button" class="btn btn-outline-info"
-                        (click)="taskButtonClick(actionRetrieve)">
+                        (click)="taskButtonClick(actionRetrieve)" [disabled]="!selectedUser.id">
                         <fa-icon [icon]="iconDetail"></fa-icon>
                     </button>
 
                     <button *ngIf="currentAction != actionUpdate" type="button" class="btn btn-outline-info"
-                        (click)="taskButtonClick(actionUpdate)">
+                        (click)="taskButtonClick(actionUpdate)" [disabled]="!selectedUser.id">
                         <fa-icon [icon]="iconEdit"></fa-icon>
                     </button>
 
                     <button *ngIf="currentAction != actionDelete" type="button" class="btn btn-outline-danger"
-                        (click)="taskButtonClick(actionDelete)">
+                        (click)="taskButtonClick(actionDelete)" [disabled]="!selectedUser.id">
                         <fa-icon [icon]="iconDelete"></fa-icon>
                     </button>
                 </div>
@@ -36,86 +36,24 @@
 
             <div #animationContainer class="fr-animation-container col-md-9 col-lg-10 px-0">
                 <div #listContainer class="fr-animation-item fr-animation-active fr-position-relative">
-                    <users-list class="w-100" (onRowSelected)="catchSelectedRow($event)"></users-list>
+                    <users-list class="w-100" [reloadList]="reloadList" (onRowSelected)="catchSelectedRow($event)">
+                    </users-list>
                 </div>
 
                 <div #detailContainer class="fr-animation-item fr-animation-right d-flex justify-content-center">
-                    <div class="col-md-10 col-lg-9">
-                        <div class="card">
-                            <strong class="card-header">Detalle de Usuario</strong>
-                            <div>
-                                <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                                    <li class="fr-detail-list list-group-item d-flex justify-content-end"><strong>An
-                                            item</strong></li>
-                                    <li class="fr-detail-list fr-detail-right list-group-item">A second item</li>
-                                </ul>
-                                <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                                    <li class="fr-detail-list list-group-item d-flex justify-content-end"><strong>An
-                                            item</strong></li>
-                                    <li class="fr-detail-list fr-detail-right list-group-item">A second item</li>
-                                </ul>
-                                <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                                    <li class="fr-detail-list list-group-item d-flex justify-content-end"><strong>An
-                                            item</strong></li>
-                                    <li class="fr-detail-list fr-detail-right list-group-item">A second item</li>
-                                </ul>
-                                <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                                    <li class="fr-detail-list list-group-item d-flex justify-content-end"><strong>An
-                                            item</strong></li>
-                                    <li class="fr-detail-list fr-detail-right list-group-item">A second item</li>
-                                </ul>
-                                <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                                    <li
-                                        class="fr-detail-list fr-detail-last list-group-item d-flex justify-content-end">
-                                        <strong>An item</strong>
-                                    </li>
-                                    <li class="fr-detail-list fr-detail-right fr-detail-last list-group-item">A second
-                                        item
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <user-detail class="w-100 d-flex justify-content-center" [selectedUserId]="selectedUser.id"
+                        [retrieveData]="currentAction == actionRetrieve">
+                    </user-detail>
                 </div>
 
                 <div #updateContainer class="fr-animation-item fr-animation-right px-1 d-flex justify-content-center">
-                    <form [formGroup]="updateForm" (ngSubmit)="onSubmit()"
-                        class="col-md-9 col-lg-8 d-flex flex-column align-items-center">
-                        <formly-form [form]="updateForm" [fields]="formFields" [model]="user" class="w-100">
-                        </formly-form>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </form>
+                    <user-edit class="w-100 d-flex justify-content-center" [selectedUser]="selectedUser"></user-edit>
                 </div>
 
                 <div #deleteContainer class="fr-animation-item fr-animation-right d-flex justify-content-center">
-                    <div class="col-md-10 col-lg-9 d-flex flex-column align-items-center">
-                        <div class="card w-100">
-                            <strong class="card-header">Eliminar Usuario</strong>
-                            <div>
-                                <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                                    <li class="fr-detail-list list-group-item d-flex justify-content-end">
-                                        <strong>Usuario:</strong>
-                                    </li>
-                                    <li class="fr-detail-list fr-detail-right list-group-item">fwroman</li>
-                                </ul>
-                                <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                                    <li class="fr-detail-list list-group-item d-flex justify-content-end"><strong>Id.
-                                            nodo:</strong></li>
-                                    <li class="fr-detail-list fr-detail-right list-group-item">MDQ6VXNlcjgyNjI2MDU=</li>
-                                </ul>
-                                <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                                    <li
-                                        class="fr-detail-list list-group-item fr-detail-last d-flex justify-content-end">
-                                        <strong>Url:</strong>
-                                    </li>
-                                    <li class="fr-detail-list fr-detail-right fr-detail-last list-group-item">
-                                        https://api.github.com/users/fwroman</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-danger mt-3">Eliminar</button>
-                    </div>
+                    <delete-detail class="w-100 d-flex justify-content-center" [selectedUser]="selectedUser"
+                        (afterUserDeleted)="goToMainList($event)">
+                    </delete-detail>
                 </div>
             </div>
         </div>

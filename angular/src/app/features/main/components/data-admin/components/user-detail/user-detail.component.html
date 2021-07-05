@@ -1,1 +1,147 @@
-<p>user-detail works!</p>
+<div class="col-md-10 col-lg-9">
+    <div class="card w-100">
+        <div class="card-header d-flex justify-content-between">
+            <strong class="d-flex align-items-center">Detalle del Usuario</strong>
+        </div>
+        <div>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Usuario:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">{{ selectedUser.username }}</li>
+            </ul>
+
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Id. nodo:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.nodeId }}
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Url:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.url }}
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Url html:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.htmlUrl }}
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Url seguidores:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.followersUrl }}
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Url seguidos:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.followingUrl }}
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Url gists:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.gistsUrl }}
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Url starred:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.starredUrl }}
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Url subscripción:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.subscriptionsUrl }}
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Url organizaciones:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.organizationsUrl }}
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Url repositorios:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.reposUrl }}
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Url eventos:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.eventsUrl }}
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Url eventos recibidos:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.receivedEventsUrl }}
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Tipo:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.type }}
+                </li>
+            </ul>
+
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Es admin:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.siteAdmin ? 'SI' : 'NO' }}
+                </li>
+            </ul>
+
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item d-flex justify-content-end">
+                    <strong>Creado en:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right list-group-item">
+                    {{ selectedUser.createdAt }}
+                </li>
+            </ul>
+
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+                <li class="fr-detail-list list-group-item fr-detail-last d-flex justify-content-end">
+                    <strong>Editado en:</strong>
+                </li>
+                <li class="fr-detail-list fr-detail-right fr-detail-last list-group-item">
+                    {{ selectedUser.updatedAt }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

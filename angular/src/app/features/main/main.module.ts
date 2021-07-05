@@ -12,10 +12,11 @@ import { Loopabck4ControllerService } from './services/loopabck4-controller.serv
 import { UsersListComponent } from './components/data-admin/components/users-list/users-list.component';
 import { UserDetailComponent } from './components/data-admin/components/user-detail/user-detail.component';
 import { UserEditComponent } from './components/data-admin/components/user-edit/user-edit.component';
+import { DeleteDetailComponent } from './components/data-admin/components/delete-detail/delete-detail.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, DataAdminComponent, GitProfilesComponent, MainLinksComponent, UsersListComponent, UserDetailComponent, UserEditComponent],
+  declarations: [HomeComponent, DataAdminComponent, GitProfilesComponent, MainLinksComponent, UsersListComponent, UserDetailComponent, UserEditComponent, DeleteDetailComponent],
   imports: [
     CommonModule,
     MainRoutingModule,
