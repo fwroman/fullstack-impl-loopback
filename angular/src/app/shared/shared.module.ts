@@ -39,7 +39,8 @@ export function playerFactory() {
     FormsModule,
     FormlyModule,
     FormlyBootstrapModule,
-    ToastComponent
+    ToastComponent,
+    LottieModule
   ],
   providers: [RestControllerService, ToastService, AnimatedImgService]
 })

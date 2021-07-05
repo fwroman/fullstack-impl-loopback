@@ -15,7 +15,7 @@ body {
   min-height    : 100vh;
   color         : $body-color;
   background    : $body-bg !important;
-  font-family   : 'Courier New', Courier, monospace !important;
+  font-family   : 'Fira Sans', sans-serif !important;
   font-size     : .77rem !important;
   overflow-x    : hidden;
   padding       : 0px;
@@ -72,6 +72,10 @@ body {
   }
 }
 
+a {
+  color: $body-color !important;
+}
+
 .fr-flex-child {
   flex: 1 !important;
 }
@@ -103,7 +107,7 @@ body {
   &.fr-link-active {
     span {
       transform : scaleX(100%);
-      background: $primary-dark;
+      background: $color-primary;
     }
   }
 }
