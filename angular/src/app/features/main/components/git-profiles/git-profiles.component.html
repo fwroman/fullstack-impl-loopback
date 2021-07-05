@@ -157,7 +157,7 @@
                                     <strong>Tipo:</strong>
                                 </li>
                                 <li class="fr-detail-list fr-detail-right list-group-item">
-                                    {{ gitUser.type }}
+                                    <span class="fr-circled-brand">{{ gitUser.type }}</span>
                                 </li>
                             </ul>
                             <ul class="list-group list-group-horizontal d-flex justify-content-center">
@@ -165,7 +165,8 @@
                                     <strong>Es admin:</strong>
                                 </li>
                                 <li class="fr-detail-list fr-detail-right fr-detail-last list-group-item">
-                                    {{ gitUser.siteAdmin ? 'SI' : 'NO' }}
+                                    <span class="fr-circled-brand fr-brand-dark">{{ gitUser.siteAdmin ? 'SI' : 'NO'
+                                        }}</span>
                                 </li>
                             </ul>
                         </div>
