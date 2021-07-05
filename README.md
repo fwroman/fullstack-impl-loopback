@@ -84,4 +84,4 @@ This project has been developed over the GNU license.
 
 ## Gratefulness 🎁
 
-I would like to thank Strategic Corp and Mushroomsoft to give me the opportunity to show my skills throughout the hiring process 🤓.
+I would like to thank **_Strategic Corp_** and **_Mushroomsoft_** to give me the opportunity to show my skills throughout the hiring process 🤓.
