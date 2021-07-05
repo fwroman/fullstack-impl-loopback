@@ -11,6 +11,11 @@ export class UserController {
     @inject(RestBindings.Http.RESPONSE) protected response: Response,
   ) { }
 
+  /**
+   * METHOD TO PERFORM THE POST HTTP OPERATION TO CREATE USERS
+   * @param user 
+   * @returns 
+   */
   @post('/users')
   @response(201, {
     description: 'User model instance',
@@ -39,6 +44,11 @@ export class UserController {
     });
   }
 
+  /**
+   * METHOD TO PERFORM THE GET HTTP OPERATION TO COUNT USERS RECORDS
+   * @param where 
+   * @returns 
+   */
   @get('/users/count')
   @response(200, {
     description: 'User model count',
@@ -50,6 +60,11 @@ export class UserController {
     return this.userRepository.count(where);
   }
 
+  /**
+   * METHOD TO PERFORM THE GET HTTP OPERATION TO GET ALL USERS
+   * @param filter 
+   * @returns 
+   */
   @get('/users')
   @response(200, {
     description: 'Array of User model instances',
@@ -68,6 +83,12 @@ export class UserController {
     return this.userRepository.find(filter);
   }
 
+  /**
+   * METHOD TO PERFORM THE PATCH HTTP OPERATION TO UPDATE ALL THE USERS DATA
+   * @param user 
+   * @param where 
+   * @returns 
+   */
   @patch('/users')
   @response(200, {
     description: 'User PATCH success count',
@@ -87,6 +108,12 @@ export class UserController {
     return this.userRepository.updateAll(user, where);
   }
 
+  /**
+   * METHOD TO PERFORM THE GET HTTP OPERATION TO RETRIEVE USER DATA BY ID
+   * @param id 
+   * @param filter 
+   * @returns 
+   */
   @get('/users/{id}')
   @response(200, {
     description: 'User model instance',
@@ -103,6 +130,11 @@ export class UserController {
     return this.userRepository.findById(id, filter);
   }
 
+  /**
+   * METHOD TO PERFORM THE PATCH HTTP OPERATION TO PARTIALLY UPDATE USER DATA BY ID
+   * @param id 
+   * @param user 
+   */
   @patch('/users/{id}')
   @response(204, {
     description: 'User PATCH success',
@@ -122,6 +154,11 @@ export class UserController {
     await this.userRepository.updateById(id, user);
   }
 
+  /**
+   * METHOD TO PERFORM THE PUT HTTP OPERATION TO UPDATE COMPLETE USER DATA BY ID
+   * @param id 
+   * @param user 
+   */
   @put('/users/{id}')
   @response(204, {
     description: 'User PUT success'
@@ -134,6 +171,10 @@ export class UserController {
     await this.userRepository.replaceById(id, user);
   }
 
+  /**
+   * METHOD TO PERFORM THE DELETE HTTP OPERATION TO REMOVE A USER FROM THE DATABASE
+   * @param id 
+   */
   @del('/users/{id}')
   @response(204, {
     description: 'User DELETE success',

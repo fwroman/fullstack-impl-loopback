@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import * as THREE from 'three';
 
+/**
+ * FUNCTION TO MAKE ALL THE GEOMETRICAL OPERATIONS FOR THE 3D ANIMATION
+ * @param canvas 
+ * @param imgUrl 
+ */
 function main(canvas: any, imgUrl: string) {
   const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
 
@@ -70,6 +75,11 @@ export class AnimatedImgService {
 
   constructor() { }
 
+  /**
+   * METHOD TO RENDER A 3D CUBED IMAGED FROM A 2D IMAGE
+   * @param canvas 
+   * @param imgUrl 
+   */
   public renderAnimatedImg(canvas: any, imgUrl: string | any) {
     main(canvas, imgUrl);
   }
