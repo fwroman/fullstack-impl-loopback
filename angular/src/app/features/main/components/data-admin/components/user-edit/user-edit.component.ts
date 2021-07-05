@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { Loopabck4ControllerService } from 'src/app/features/main/services/loopabck4-controller.service';
 import { User } from 'src/app/shared/models/user';
 
 @Component({
@@ -10,13 +11,17 @@ import { User } from 'src/app/shared/models/user';
 })
 export class UserEditComponent implements OnInit {
   @Input() selectedUser: User;
+  @Output() afterUserEdit: EventEmitter<boolean>;
 
   public formFields: FormlyFieldConfig[];
   public updateForm: FormGroup;
 
-  constructor() {
+  constructor(
+    private _Loopabck4ControllerService: Loopabck4ControllerService
+  ) {
     this.selectedUser = new User();
     this.updateForm = new FormGroup({});
+    this.afterUserEdit = new EventEmitter<boolean>();
     this.formFields = [
       {
         key: 'username',
@@ -47,7 +52,7 @@ export class UserEditComponent implements OnInit {
         key: 'gravatarId',
         type: 'input',
         templateOptions: {
-          label: 'Url de gavatar',
+          label: 'Id de gavatar',
           required: false
         }
       },
@@ -147,7 +152,6 @@ export class UserEditComponent implements OnInit {
         templateOptions: {
           label: 'Url de eventos recibidos',
           rows: 2,
-          required: true
         }
       },
       {
@@ -167,6 +171,10 @@ export class UserEditComponent implements OnInit {
    * METHOD TO HANDLE THE SUBMIT EVENT OF THE FORM
    */
   public onSubmit() {
-    console.log("this.selectedUser", this.selectedUser);
+    if (this.updateForm.valid) {
+      this._Loopabck4ControllerService.updateUserPartiallyById(this.selectedUser).subscribe(() => {
+        this.afterUserEdit.emit(true);
+      });
+    }
   }
 }

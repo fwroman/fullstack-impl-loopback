@@ -47,7 +47,8 @@
                 </div>
 
                 <div #updateContainer class="fr-animation-item fr-animation-right px-1 d-flex justify-content-center">
-                    <user-edit class="w-100 d-flex justify-content-center" [selectedUser]="selectedUser"></user-edit>
+                    <user-edit class="w-100 d-flex justify-content-center" [selectedUser]="selectedUser"
+                        (afterUserEdit)="goToMainList($event)"></user-edit>
                 </div>
 
                 <div #deleteContainer class="fr-animation-item fr-animation-right d-flex justify-content-center">

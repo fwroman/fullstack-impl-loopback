@@ -78,8 +78,8 @@ export class DataAdminComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * METHOD
-   * @param event 
+   * METHOD TO SHOW THE MAIN LIST AFTER A RECORD HAS BEEN UPDATED OR DELETED
+   * @param event
    */
   public goToMainList(event: boolean) {
     this.taskButtonClick(ACTION_LIST);

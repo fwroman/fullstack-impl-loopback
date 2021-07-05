@@ -9,7 +9,7 @@ import { User } from 'src/app/shared/models/user';
   styleUrls: ['./user-detail.component.scss']
 })
 export class UserDetailComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() selectedUserId: string;
+  @Input() selectedUserId: string | any;
   @Input() retrieveData: boolean | any;
 
   private _subscription: Subscription | any;
