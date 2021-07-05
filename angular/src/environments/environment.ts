@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiLoopback4: '',
-  openApiGitHub: '',
+  apiLoopback4: 'http://127.0.0.1:3000',
+  openApiGitHub: 'https://api.github.com',
 };
 
 /*

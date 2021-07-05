@@ -3,6 +3,7 @@ import { GitUser } from 'src/app/shared/interfaces/git-user';
 import { RestControllerService } from 'src/app/shared/services/main/rest-controller.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,8 @@ export class GithubControllerService {
    * @returns 
    */
   public getUsersByUseraname(username: string): Observable<GitUser> {
-    const url = `https://api.github.com/users/${username}`;
-    return this._RestControllerService.PeticionHttpGetGenerica(url)
+    const url = `${environment.openApiGitHub}/users/${username}`;
+    return this._RestControllerService.genericHttpRequestGet(url)
       .pipe(
         map((resp: any) => {
           return this.formatGitUserData(resp);
@@ -32,8 +33,8 @@ export class GithubControllerService {
    * @returns 
    */
   public getAllUsers(): Observable<GitUser[]> {
-    const url = "https://api.github.com/users?per_page=100";
-    return this._RestControllerService.PeticionHttpGetGenerica(url)
+    const url = `${environment.openApiGitHub}/users?per_page=100`;
+    return this._RestControllerService.genericHttpRequestGet(url)
       .pipe(
         map((resp: any[]) => {
           let gitUserList: GitUser[] = [];

@@ -16,7 +16,7 @@ export class RestControllerService {
    * @param url 
    * @returns 
    */
-  public PeticionHttpDeleteGenerica(url: string): Observable<any> {
+  public genericHttpRequestDelete(url: string): Observable<any> {
     return this._HttpClient.delete(url);
   }
 
@@ -26,8 +26,18 @@ export class RestControllerService {
    * @param body 
    * @returns 
    */
-  public PeticionHttpPutGenerica(url: string, body: any): Observable<any> {
+  public genericHttpRequestPut(url: string, body: any): Observable<any> {
     return this._HttpClient.put(url, body);
+  }
+
+  /**
+   * GENERIC HTTP METHOD TO PERFORM A PATCH REQUEST
+   * @param url 
+   * @param body 
+   * @returns 
+   */
+  public genericHttpRequestPatch(url: string, body: any): Observable<any> {
+    return this._HttpClient.patch(url, body);
   }
 
   /**
@@ -36,7 +46,7 @@ export class RestControllerService {
    * @param body 
    * @returns 
    */
-  public PeticionHttpPostGenerica(url: string, body: any): Observable<any> {
+  public genericHttpRequestPost(url: string, body: any): Observable<any> {
     return this._HttpClient.post(url, body);
   }
 
@@ -45,7 +55,7 @@ export class RestControllerService {
    * @param url 
    * @returns 
    */
-  public PeticionHttpGetGenerica(url: string): Observable<any> {
+  public genericHttpRequestGet(url: string): Observable<any> {
     return this._HttpClient.get(url);
   }
 }

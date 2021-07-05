@@ -36,37 +36,7 @@
 
             <div #animationContainer class="fr-animation-container col-md-9 col-lg-10 px-0">
                 <div #listContainer class="fr-animation-item fr-animation-active fr-position-relative">
-                    <div class="card">
-                        <strong class="card-header">Lista de Usuarios</strong>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Country</th>
-                                    <th scope="col">Area</th>
-                                    <th scope="col">Population</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let country of countries">
-                                    <th scope="row">{{ country.id }}</th>
-                                    <td>
-                                        <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
-                                            class="mr-2" style="width: 20px">
-                                        {{ country.name }}
-                                    </td>
-                                    <td>{{ country.area | number}}</td>
-                                    <td>{{ country.population | number }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="card-footer d-flex justify-content-end pb-0">
-                            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
-                                (pageChange)="refreshCountries()">
-                            </ngb-pagination>
-                        </div>
-                    </div>
+                    <users-list class="w-100" (onRowSelected)="catchSelectedRow($event)"></users-list>
                 </div>
 
                 <div #detailContainer class="fr-animation-item fr-animation-right d-flex justify-content-center">

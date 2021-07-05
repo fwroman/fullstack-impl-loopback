@@ -8,15 +8,19 @@ import { GitProfilesComponent } from './components/git-profiles/git-profiles.com
 import { MainLinksComponent } from './components/main-links/main-links.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { GithubControllerService } from './services/github-controller.service';
+import { Loopabck4ControllerService } from './services/loopabck4-controller.service';
+import { UsersListComponent } from './components/data-admin/components/users-list/users-list.component';
+import { UserDetailComponent } from './components/data-admin/components/user-detail/user-detail.component';
+import { UserEditComponent } from './components/data-admin/components/user-edit/user-edit.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, DataAdminComponent, GitProfilesComponent, MainLinksComponent],
+  declarations: [HomeComponent, DataAdminComponent, GitProfilesComponent, MainLinksComponent, UsersListComponent, UserDetailComponent, UserEditComponent],
   imports: [
     CommonModule,
     MainRoutingModule,
     SharedModule
   ],
-  providers: [GithubControllerService]
+  providers: [GithubControllerService, Loopabck4ControllerService]
 })
 export class MainModule { }
