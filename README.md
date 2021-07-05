@@ -1,6 +1,6 @@
 # Fullstack Web Aplication Test
 
-This project is a fullstack implementation to retrieve github users information and import it as needed inside a local database through a custom REST API which is consumed by a web application. The REST API have basic HTTP operations to create, retrieve, update and delete data located in the local database.
+This project is a fullstack implementation to retrieve github users information from the github API to import it as needed inside a local database through a custom REST API which is consumed by a web application. The REST API have basic HTTP operations to create, retrieve, update and delete data located in the local database.
 
 ## Getting started 🚀
 
@@ -76,9 +76,7 @@ The development tools used in this project are shown above.
 
 ## Contributos ✒️
 
-_Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios_
-
-* **Waldon Fredi Román** - *Desarrollo fullstack* - [fwroman](https://github.com/fwroman)
+* **Waldon Fredi Román** - *Fullstack development* - [fwroman](https://github.com/fwroman)
 
 ## License 📄
 
